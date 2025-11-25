@@ -7,7 +7,7 @@ async function init() {
     const res = await fetch('/api/features');
     featureFlags = await res.json();
 
-    // 更新 Admin Console 的勾選狀態 (如果有的話)
+    // 更新 Admin Console 的勾選狀態
     const tShort = document.getElementById('toggle-short');
     const tReport = document.getElementById('toggle-report');
     if(tShort) tShort.checked = featureFlags.shortLogin;
@@ -71,9 +71,45 @@ async function doLogin() {
     }
 }
 
-// === 功能二：目前先留空，等下一個分支再做 ===
+// === 功能二：回報按鈕與安全檢查 ===
 function renderFeed() {
-    // 暫時不做變更
+    const container = document.getElementById('feed-container');
+    const posts = [{id:1, text:"Nice weather"}, {id:2, text:"Spam AD"}];
+
+    let html = '';
+    posts.forEach(post => {
+        let btn = '';
+        // HDD: Toggle 檢查
+        // Security: 只有登入後才顯示按鈕 (Access Boundary)
+        if (featureFlags.quickReport && currentUserToken) {
+            btn = `<button class="btn-danger" onclick="doReport(${post.id})">🚩 Report</button>`;
+        } else if (currentUserToken) {
+            btn = `<small style="color:gray">... More</small>`;
+        }
+        html += `<div style="border-bottom:1px solid #eee; padding:10px; display:flex; justify-content:space-between;">
+                    <span>${post.text}</span> ${btn}
+                 </div>`;
+    });
+    container.innerHTML = html;
+}
+
+async function doReport(id) {
+    if(!confirm("Confirm report?")) return;
+
+    const res = await fetch('/api/report', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + currentUserToken // Token Injection
+        },
+        body: JSON.stringify({postId: id})
+    });
+
+    if(res.status === 403) {
+        alert("Security Alert: Unauthorized Access Blocked!");
+    } else {
+        alert("Report Submitted Successfully.");
+    }
 }
 
 // === Admin 更新後端 ===
