@@ -2,28 +2,123 @@
 <html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
-    <title>DevSecOps Demo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevSecOps App Demo</title>
     <style>
-        body { font-family: sans-serif; padding: 20px; background: #f0f2f5; }
-        .card { background: white; padding: 20px; margin-bottom: 20px; border-radius: 8px; }
-        .hidden { display: none; }
-        .btn-danger { background: red; color: white; border: none; padding: 5px 10px; cursor: pointer; }
+        /* 配合 Designer 的風格設定 */
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background-color: #f0f2f5; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            padding: 20px; 
+            margin: 0;
+        }
+        
+        /* 模擬手機 APP 的卡片外觀 */
+        .mobile-card {
+            background: white;
+            width: 100%;
+            max-width: 360px;
+            border-radius: 20px;
+            padding: 24px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            margin-bottom: 24px;
+            transition: all 0.3s ease;
+        }
+
+        h2 { font-size: 18px; margin: 0 0 20px 0; color: #1c1e21; text-align: center; border-bottom: 1px solid #eee; padding-bottom: 10px; }
+        h4 { margin: 0 0 15px 0; color: #65676b; font-size: 14px; font-weight: normal; }
+
+        label { display: block; font-size: 12px; color: #65676b; margin-bottom: 4px; margin-top: 10px; }
+        
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 8px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-sizing: border-box;
+            background: #f5f6f7;
+            font-size: 14px;
+        }
+
+        /* 藍色主按鈕 */
+        .btn {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 14px;
+            margin-top: 15px;
+            transition: background 0.2s;
+        }
+        .btn-primary { background-color: #1877f2; color: white; }
+        .btn-primary:hover { background-color: #166fe5; }
+        .btn-secondary { background-color: #e4e6eb; color: #050505; }
+
+        /* 紅色回報按鈕 (Feature 2) */
+        .btn-report {
+            background-color: #fff;
+            color: #dc3545;
+            font-size: 12px;
+            padding: 6px 12px;
+            border-radius: 15px;
+            cursor: pointer;
+            border: 1px solid #dc3545;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .btn-report:hover { background-color: #dc3545; color: white; }
+
+        /* 貼文列表樣式 */
+        .post-item {
+            border-bottom: 1px solid #eee;
+            padding: 15px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .user-info { display: flex; align-items: center; gap: 10px; }
+        .avatar { width: 36px; height: 36px; background: #ddd; border-radius: 50%; }
+        .user-text b { font-size: 14px; display: block; }
+        .user-text span { font-size: 12px; color: #65676b; }
+
+        /* Admin Console */
+        .admin-panel {
+            background: #242526;
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            font-size: 13px;
+        }
+        .hidden { display: none !important; }
     </style>
 </head>
 <body>
-    <div style="background:#333; color:white; padding:15px; margin-bottom:20px;">
-        <h3>🔧 Admin Console</h3>
-        <label><input type="checkbox" id="toggle-short" onchange="updateBackendFlags()"> Feature: Short Login</label><br>
-        <label><input type="checkbox" id="toggle-report" onchange="updateBackendFlags()"> Feature: Quick Report</label>
+
+    <div class="admin-panel">
+        <div style="font-weight:bold; margin-bottom:10px;">🔧 DevSecOps Admin Console</div>
+        <label style="color:white; display:inline-block; margin-right:15px;">
+            <input type="checkbox" id="toggle-short" onchange="updateBackendFlags()"> Short Login Flow
+        </label>
+        <label style="color:white; display:inline-block;">
+            <input type="checkbox" id="toggle-report" onchange="updateBackendFlags()"> Quick Report Button
+        </label>
     </div>
 
-    <div class="card">
-        <h2>1. Login System</h2>
+    <div class="mobile-card">
+        <h2>Login System</h2>
         <div id="login-container">Loading...</div>
     </div>
 
-    <div class="card">
-        <h2>2. News Feed</h2>
+    <div class="mobile-card">
+        <h2>News Feed</h2>
         <div id="feed-container">Loading...</div>
     </div>
 
