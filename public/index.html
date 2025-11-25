@@ -2,31 +2,31 @@
 <html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
-    <title>Legacy System</title>
+    <title>DevSecOps Demo</title>
     <style>
         body { font-family: sans-serif; padding: 20px; background: #f0f2f5; }
         .card { background: white; padding: 20px; margin-bottom: 20px; border-radius: 8px; }
         .hidden { display: none; }
-        .btn { padding: 8px 16px; background: #ccc; border: none; cursor: pointer; }
+        .btn-danger { background: red; color: white; border: none; padding: 5px 10px; cursor: pointer; }
     </style>
 </head>
 <body>
-    <h1>👴 Legacy System (v1.0)</h1>
-    <div class="card">
-        <h2>1. Login (Old Step-by-Step)</h2>
-        <div id="step1">
-            <input type="text" placeholder="Email">
-            <button class="btn" onclick="document.getElementById('step1').classList.add('hidden');document.getElementById('step2').classList.remove('hidden')">Next</button>
-        </div>
-        <div id="step2" class="hidden">
-            <input type="password" placeholder="Password">
-            <button class="btn" onclick="alert('Login logic...')">Login</button>
-        </div>
+    <div style="background:#333; color:white; padding:15px; margin-bottom:20px;">
+        <h3>🔧 Admin Console</h3>
+        <label><input type="checkbox" id="toggle-short" onchange="updateBackendFlags()"> Feature: Short Login</label><br>
+        <label><input type="checkbox" id="toggle-report" onchange="updateBackendFlags()"> Feature: Quick Report</label>
     </div>
+
     <div class="card">
-        <h2>2. News Feed (No Actions)</h2>
-        <p>Post 1: Hello World <small>...More</small></p>
-        <p>Post 2: Spam Content <small>...More</small></p>
+        <h2>1. Login System</h2>
+        <div id="login-container">Loading...</div>
     </div>
+
+    <div class="card">
+        <h2>2. News Feed</h2>
+        <div id="feed-container">Loading...</div>
+    </div>
+
+    <script src="toggle.js"></script>
 </body>
 </html>
